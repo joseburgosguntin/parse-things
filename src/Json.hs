@@ -22,11 +22,7 @@ parseNull :: Parser Json
 parseNull = Null <$ string "\"null\""
 
 parseBool :: Parser Json
-parseBool = Bool . toBool <$> (string "\"false\"" <|> string "\"true\"")
-  where
-    toBool = \case
-        "true" -> True
-        "false" -> False
+parseBool = Bool <$> (False <$ string "\"false\"" <|> True <$ string "\"true\"")
 
 parseNumber :: Parser Json
 parseNumber = Number <$> double
@@ -52,7 +48,6 @@ parseObject =
   where
     parseKeyValue :: Parser (Text, Json)
     parseKeyValue = do
-        skipSpace
         String key <- parseString
         skipSpace *> char ':'
         value <- parseJson
