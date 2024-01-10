@@ -9,7 +9,7 @@ import System.Directory (getCurrentDirectory)
 parseInput :: String -> Parser a -> IO a
 parseInput input parser = do
     dir <- getCurrentDirectory
-    let inputPath = dir <> "/input/" <> input <> ".txt"
+    let inputPath = dir <> "/input/" <> input
     txt <- fromFile inputPath
     case parseOnly parser txt of
         Right res -> return res
